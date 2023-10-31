@@ -1,0 +1,7 @@
+patient(pid,fname,lname,dob,reasonforcheckingin,insurance_no,address,sexual_orientation,doctorid)
+doctor(did,college,dtype,officeroomnumber)
+medication(mname,expiration_date,price,company,amount,medtype,mid)
+employee(eid,fname,lname,salary,address,etype)
+medicationroom(medicationid,roomid)
+rooms(roomid,roomnumber,roomtypeid,capacity,availability)
+
