@@ -1,0 +1,1 @@
+patient(pid,fname,lname,dob,reasonforcheckingin,insurance_no,address,sexual_orientation,doctorid)
