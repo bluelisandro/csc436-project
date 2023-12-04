@@ -1,14 +1,14 @@
 "use client";
-import Fetch from './FetchPatients'
+import Fetch from './PatientFetch'
 import { timeAgo } from '@/lib/utils'
 import Image from 'next/image'
 import RefreshButton from './refresh-button'
 import { seed } from '@/lib/seed'
 import { useState, useEffect } from 'react'
 
-import Patient from '@/lib/schemata'
+import Patient from '@/lib/patient'
 
-export default function Table() {
+export default function PatientTable() {
   // const patients = await Fetch()
 
   const [data, setData] = useState<Patient[]>([]);
@@ -72,7 +72,7 @@ export default function Table() {
             {patient.insurance_no}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.address.street + ", " + patient.address.city + ", " + patient.address.state + ", " + patient.address.zip}
+            {patient.address}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
             {patient.sexual_orientation}

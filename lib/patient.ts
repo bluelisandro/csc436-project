@@ -5,12 +5,7 @@ type Patient = {
     dob: string;
     reasonforcheckingin: string;
     insurance_no: number;
-    address: {
-        street: string;
-        city: string;
-        state: string;
-        zip: number;
-    };
+    address: string,
     sexual_orientation: string;
     doctorid: number;
 };
