@@ -7,6 +7,7 @@ import ExpandingArrow from '@/components/expanding-arrow'
 // Components
 import PatientTable from '@/components/PatientTable'
 import EmployeeTable from '@/components/EmployeeTable'
+import MedicationTable from '@/components/MedicationTable'
 import TablePlaceholder from '@/components/TablePlaceholder'
 
 export const runtime = 'edge'
@@ -40,7 +41,7 @@ export default function Home() {
         {/* View Patients Button */}
         <div
           onClick={() => handleTableSwitch('PatientTable')}
-          className="group mx-10 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition-all"
+          className="group mx-10 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 hover:bg-white duration-40"
         >
           <p>Patients</p>
           <ExpandingArrow />
@@ -49,18 +50,43 @@ export default function Home() {
         {/* View Employees Button */}
         <div
           onClick={() => handleTableSwitch('EmployeeTable')}
-          className="group mt-20 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition-all"
+          className="roup mx-10 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 hover:bg-white duration-40"
         >
           <p>Employees</p>
           <ExpandingArrow />
         </div>
 
+        {/* View Medications Button */}
+        <div
+          onClick={() => handleTableSwitch('MedicationTable')}
+          className="roup mx-10 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 hover:bg-white duration-40"
+        >
+          <p>Medications</p>
+          <ExpandingArrow />
+        </div>
+
+        {/* View Technology Button */}
+        <div
+          onClick={() => handleTableSwitch('EmployeeTable')}
+          className="roup mx-10 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 hover:bg-white duration-40"
+        >
+          <p>Technology</p>
+          <ExpandingArrow />
+        </div>
+
       </div>
 
-      <Suspense fallback={<TablePlaceholder />}>
+      <Suspense fallback={
+        <div>
+          <TablePlaceholder />
+          <p className="justify-center bold text-xl">Loading.....</p>
+        </div>}>
         {
-          currentTable === 'PatientTable' ? <PatientTable /> :
-            currentTable === 'EmployeeTable' ? <EmployeeTable /> : <TablePlaceholder />
+          currentTable === 'TablePlaceHolder' ? <TablePlaceholder /> :
+            currentTable === 'PatientTable' ? <PatientTable /> :
+            currentTable === 'EmployeeTable' ? <EmployeeTable /> : 
+            currentTable === 'MedicationTable' ? <MedicationTable /> : 
+            <TablePlaceholder />
         }
       </Suspense>
 
