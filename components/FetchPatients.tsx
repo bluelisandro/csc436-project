@@ -1,4 +1,3 @@
-// "use client";
 import { sql } from '@vercel/postgres'
 
 export default async function Fetch() {
