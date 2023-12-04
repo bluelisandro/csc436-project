@@ -26,42 +26,40 @@ export default function Table() {
   if (!data) return <div>Loading...</div>;
 
   return (
+    // Create card that table sits on
     <div className="bg-white/30 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto w-full">
+
       <div className="flex justify-between items-center mb-4">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">Patients</h2>
         </div>
         <RefreshButton />
       </div>
-      <div className="divide-y divide-gray-900/5">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((patient) => (
-              <div
-                key={patient.pid}
-                className="flex items-center justify-between py-3"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="space-y-1">
-                    <tr>
-                      <td className="font-medium leading-none">{patient.pid}</td>
-                      <td className="text-sm text-gray-500">{patient.fname}</td>
-                      <td className="text-sm text-gray-500">{patient.lname}</td>
-                    </tr>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </tbody>
-        </table>
+
+      {/* Table head starts */}
+      <div className="m-2 grid grid-cols-3">
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold">ID</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold">Fname</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold">Lname</div>
       </div>
+      {/* Table head ends */}
+    
+      {/* Table body starts */}
+      {data.map((patient) => (
+        <div key={patient.pid} className="m-2 grid grid-cols-3">
+          <div className="flex items-center justify-center border-[1px] py-4">
+            {patient.pid}
+          </div>
+          <div className="flex items-center justify-center border-[1px] py-4">
+            {patient.fname}
+          </div>
+          <div className="flex items-center justify-center border-[1px] py-4">
+            {patient.lname}
+          </div>
+        </div>
+      ))}
+      {/* Table body ends */}
+
     </div>
   )
 }
