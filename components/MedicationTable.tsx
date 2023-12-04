@@ -1,12 +1,12 @@
 "use client";
-import Fetch from './PatientFetch'
+import Fetch from '@/components/MedicationFetch'
 import RefreshButton from './refresh-button'
 import { useState, useEffect } from 'react'
 
-import Patient from '@/lib/patient'
+import Medication from '@/lib/medication'
 
-export default function PatientTable() {
-  const [data, setData] = useState<Patient[]>([]);
+export default function MedicationTable() {
+  const [data, setData] = useState<Medication[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -18,62 +18,53 @@ export default function PatientTable() {
     fetchData();
   }, []);
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <div className="bold text-xl justify-center">Loading...</div>;
 
   return (
     // Create card that table sits on
-    <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-auto w-full">
+    <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-auto w-full ">
 
       <div className="flex justify-between items-center mb-8">
         <div className="space-y-1">
-          <h2 className="text-xl font-semibold">Patients</h2>
+          <h2 className="text-xl font-semibold">Medications</h2>
         </div>
         <RefreshButton />
       </div>
 
       {/* Table head starts */}
-      <div className="grid grid-cols-9 gap-0">
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">PID</div>
+      <div className="grid grid-cols-7 gap-0">
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">EID</div>
         <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Fname</div>
         <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Lname</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">DOB</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Reason for Check-in</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Insurance #</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Salary</div>
         <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Address</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Sex</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">DID</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Type</div>
       </div>
       {/* Table head ends */}
     
       {/* Table body starts */}
-      {data.map((patient) => (
-        <div key={patient.pid} className="grid grid-cols-9 gap-0">
+      {data.map((medication) => (
+        <div key={medication.mid} className="grid grid-cols-7 gap-0">
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.pid}
+            {medication.mid}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.fname}
+            {medication.mname}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.lname}
+            {medication.medtype}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.dob}
+            {medication.price}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.reasonforcheckingin}
+            {medication.amount}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.insurance_no}
+            {medication.company}
           </div>
           <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.address}
-          </div>
-          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.sexual_orientation}
-          </div>
-          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
-            {patient.doctorid}
+            {medication.expiration_date}
           </div>
         </div>
       ))}
