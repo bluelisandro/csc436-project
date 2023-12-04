@@ -4,7 +4,7 @@ export default async function Fetch() {
   let data: any
 
   try {
-    data = await sql`SELECT pid, fname, lname FROM patient`
+    data = await sql`SELECT * FROM patient`
   } catch (e: any) {
     if (e) {
       throw e

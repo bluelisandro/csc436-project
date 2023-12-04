@@ -27,9 +27,9 @@ export default function Table() {
 
   return (
     // Create card that table sits on
-    <div className="bg-white/30 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto w-full">
+    <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-auto w-full">
 
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-8">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">Patients</h2>
         </div>
@@ -37,24 +37,48 @@ export default function Table() {
       </div>
 
       {/* Table head starts */}
-      <div className="m-2 grid grid-cols-3">
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold">ID</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold">Fname</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold">Lname</div>
+      <div className="grid grid-cols-9 gap-0">
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">PID</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Fname</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Lname</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">DOB</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Reason for Check-in</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Insurance #</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Address</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Sex</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">DID</div>
       </div>
       {/* Table head ends */}
     
       {/* Table body starts */}
       {data.map((patient) => (
-        <div key={patient.pid} className="m-2 grid grid-cols-3">
-          <div className="flex items-center justify-center border-[1px] py-4">
+        <div key={patient.pid} className="grid grid-cols-9 gap-0">
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
             {patient.pid}
           </div>
-          <div className="flex items-center justify-center border-[1px] py-4">
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
             {patient.fname}
           </div>
-          <div className="flex items-center justify-center border-[1px] py-4">
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
             {patient.lname}
+          </div>
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
+            {patient.dob}
+          </div>
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
+            {patient.reasonforcheckingin}
+          </div>
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
+            {patient.insurance_no}
+          </div>
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
+            {patient.address.street + ", " + patient.address.city + ", " + patient.address.state + ", " + patient.address.zip}
+          </div>
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
+            {patient.sexual_orientation}
+          </div>
+          <div className="flex items-center justify-center border-[2px] py-2 px-2 text-lg">
+            {patient.doctorid}
           </div>
         </div>
       ))}
