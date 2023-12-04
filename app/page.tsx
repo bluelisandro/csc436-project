@@ -1,10 +1,12 @@
+"use client";
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import ExpandingArrow from '@/components/expanding-arrow'
 
 // Components
-import Table from '@/components/PatientsTable'
+import PatientTable from '@/components/PatientTable'
+import EmployeeTable from '@/components/EmployeeTable'
 import TablePlaceholder from '@/components/TablePlaceholder'
 
 export const runtime = 'edge'
@@ -12,6 +14,13 @@ export const preferredRegion = 'home'
 export const dynamic = 'force-dynamic'
 
 export default function Home() {
+  const [currentTable, setCurrentTable] = useState('PatientTable');
+
+  const handleTableSwitch = (tableName: string) => {
+    setCurrentTable(tableName);
+  };
+
+
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center">
       <Link
@@ -25,73 +34,36 @@ export default function Home() {
         Hospital Database
       </h1>
 
-      <Suspense fallback={<TablePlaceholder/>}>
-        <Table />
+      {/* ----- View Tables Buttons -----*/}
+      <div className="flex">
+
+        {/* View Patients Button */}
+        <div
+          onClick={() => handleTableSwitch('PatientTable')}
+          className="group mx-10 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition-all"
+        >
+          <p>Patients</p>
+          <ExpandingArrow />
+        </div>
+
+        {/* View Employees Button */}
+        <div
+          onClick={() => handleTableSwitch('EmployeeTable')}
+          className="group mt-20 mb-10 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition-all"
+        >
+          <p>Employees</p>
+          <ExpandingArrow />
+        </div>
+
+      </div>
+
+      <Suspense fallback={<TablePlaceholder />}>
+        {
+          currentTable === 'PatientTable' ? <PatientTable /> :
+            currentTable === 'EmployeeTable' ? <EmployeeTable /> : <TablePlaceholder />
+        }
       </Suspense>
-      
-      <p className="font-light text-gray-600 w-full max-w-lg text-center mt-6">
-        {/* <Link
-          href="https://vercel.com/postgres"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Vercel Postgres
-        </Link>{' '}
-        demo. */}
-        <br /> Built with{' '} 
-        <Link
-          href="https://nextjs.org/docs"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Next.js App Router
-        </Link>
-        .
-      </p>
 
-      <div className="flex justify-center space-x-5 pt-10 mt-10 border-t border-gray-300 w-full max-w-xl text-gray-600">
-        <Link
-          href="https://postgres-prisma.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Prisma
-        </Link>
-        <Link
-          href="https://postgres-kysely.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Kysely
-        </Link>
-        <Link
-          href="https://postgres-drizzle.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Drizzle
-        </Link>
-      </div>
-
-      <div className="sm:absolute sm:bottom-0 w-full px-20 py-10 flex justify-between">
-        <Link href="https://vercel.com">
-          <Image
-            src="/vercel.svg"
-            alt="Vercel Logo"
-            width={100}
-            height={24}
-            priority
-          />
-        </Link>
-        <Link
-          href="https://github.com/bluelisandro/csc436-project"
-          className="flex items-center space-x-2"
-        >
-          <Image
-            src="/github.svg"
-            alt="GitHub Logo"
-            width={24}
-            height={24}
-            priority
-          />
-          <p className="font-light">Source</p>
-        </Link>
-      </div>
     </main>
   )
 }
