@@ -40,8 +40,18 @@ export default function Home() {
 
   const handleDeleteChange = (e) => {
     setIdToDelete(e.target.value);
+    e.target.value = '';
   };
-  
+
+  const refreshState = () => {
+    setTableState('all');
+  };
+
+  useEffect(() => {
+    setIdToDelete(''); // Reset idToDelete to an empty string when tableState changes
+  }, [tableState]);
+
+
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen">
@@ -58,7 +68,7 @@ export default function Home() {
       <h4 className="text-gray-600 text-sm font-medium pb-8">Created by Ryan Fish and Lisandro Nunez</h4>
 
       {/* ----- Start Table View Buttons-----*/}
-      <div className="flex mt-10 items-center">
+      <div className="flex mt-10 items-center" onClick={refreshState}>
         <h4 className="text-gray-600 text-md font-semibold mr-4 mb-6">Tables</h4> {/* Changed: Added 'mr-4' for margin */}
 
         {/* View Patients Button */}
@@ -123,6 +133,7 @@ export default function Home() {
       <div className="flex mt-10 items-center">
         <h4 className="text-gray-600 text-md font-semibold mr-4 mb-6">Actions</h4>
 
+        {/* ----- Delete Entry -----*/}
         <form onSubmit={handleDeleteSubmit}>
           <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-red-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40">
             <input
@@ -178,15 +189,15 @@ export default function Home() {
             <p className="justify-center bold text-xl">Loading.....</p>
           </div>}>
           {
-                currentTable === 'TablePlaceHolder' ? <TablePlaceholder /> :
-                  currentTable === 'PatientTable' ? <PatientTable tableState={tableState} setTableState={setTableState} idToDelete={idToDelete} /> :
-                    currentTable === 'EmployeeTable' ? <EmployeeTable tableState={tableState} setTableState={setTableState} idToDelete={idToDelete} /> :
-                      currentTable === 'MedicationTable' ? <MedicationTable /> :
-                        currentTable === 'RoomTable' ? <RoomTable /> :
-                          currentTable === 'EmployeeTasksTable' ? <EmployeeTasksTable /> :
-                            currentTable === 'TechnologyTable' ? <TechnologyTable /> :
-                              <TablePlaceholder />
-            }
+            currentTable === 'TablePlaceHolder' ? <TablePlaceholder /> :
+              currentTable === 'PatientTable' ? <PatientTable tableState={tableState} setTableState={setTableState} idToDelete={idToDelete} /> :
+                currentTable === 'EmployeeTable' ? <EmployeeTable tableState={tableState} setTableState={setTableState} idToDelete={idToDelete} /> :
+                  currentTable === 'MedicationTable' ? <MedicationTable /> :
+                    currentTable === 'RoomTable' ? <RoomTable /> :
+                      currentTable === 'EmployeeTasksTable' ? <EmployeeTasksTable /> :
+                        currentTable === 'TechnologyTable' ? <TechnologyTable /> :
+                          <TablePlaceholder />
+          }
         </Suspense>
       </div>
 

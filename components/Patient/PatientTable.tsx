@@ -19,7 +19,7 @@ export default function PatientTable({ tableState, setTableState, idToDelete }: 
     async function fetchData() {
       let result;
 
-      if (tableState === 'all') {
+      if (tableState === 'all' || idToDelete === '') {
         result = await Fetch();
       } else if (tableState === 'delete' && idToDelete) { // Check if idToDelete is not empty
         result = await Delete(idToDelete); // Pass the id to the Delete function
