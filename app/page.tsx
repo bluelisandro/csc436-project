@@ -6,11 +6,11 @@ import ExpandingArrow from '@/components/expanding-arrow'
 
 // Components
 import PatientTable from '@/components/Patient/PatientTable'
-import EmployeeTable from '@/components/EmployeeTable'
+import EmployeeTable from '@/components/Employee/EmployeeTable'
 import MedicationTable from '@/components/MedicationTable'
 import RoomTable from '@/components/RoomTable'
 import EmployeeTasksTable from '@/components/EmployeeTaskTable'
-import TechnologyTable from '@/components/TechnologyTable'
+import TechnologyTable from '@/components/Technology/TechnologyTable'
 import TablePlaceholder from '@/components/TablePlaceholder'
 import DeleteEntry from '@/components/DeleteEntry'
 
@@ -21,39 +21,27 @@ export const dynamic = 'force-dynamic'
 export default function Home() {
   // Store current table being shown in currentTable
   const [currentTable, setCurrentTable] = useState('PatientTable');
-  const [deleteRequest, setDeleteRequest] = useState(false);
   const [idToDelete, setIdToDelete] = useState('');
-  const [refreshRequest, setRefreshRequest] = useState(false)
-  const [tableKey, setTableKey] = useState(0); // State for the key
-
-  // Update tableKey whenever refreshRequest changes
-  useEffect(() => {
-    if (refreshRequest) {
-      setTableKey((prevKey) => prevKey + 1); // Update the key
-      setRefreshRequest(false); // Reset refreshRequest after triggering a refresh
-    }
-  }, [refreshRequest]);
-
-  const handleRefreshRequest = () => {
-    setRefreshRequest(true);
-  }
+  const [tableState, setTableState] = useState('all')
 
   const handleTableSwitch = (tableName: string) => {
     setCurrentTable(tableName);
   };
 
-  const handleDelete = () => {
-    setDeleteRequest(true);
-  };
-
-  const handleSubmit = (e) => {
+  const handleDeleteSubmit = (e) => {
     e.preventDefault();
-    setDeleteRequest(true);
+    setTableState('delete');
   };
 
-  const handleChange = (e) => {
+  const handleFnameSearchSubmit = (e) => {
+    e.preventDefault();
+    setTableState('fnameSearch');
+  };
+
+  const handleDeleteChange = (e) => {
     setIdToDelete(e.target.value);
   };
+  
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen">
@@ -135,23 +123,45 @@ export default function Home() {
       <div className="flex mt-10 items-center">
         <h4 className="text-gray-600 text-md font-semibold mr-4 mb-6">Actions</h4>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleDeleteSubmit}>
           <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-red-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40">
             <input
               type="text"
               placeholder="Enter ID"
               value={idToDelete}
-              onChange={handleChange}
+              onChange={handleDeleteChange}
               className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500"
             />
             <button
               type="submit"
               className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
+              onClick={handleDeleteSubmit}
             >
-              Delete Entry by ID
+              Delete by ID
             </button>
             <ExpandingArrow />
-            {deleteRequest && <DeleteEntry id={idToDelete} />}
+            {/* {deleteRequest && <DeleteEntry id={idToDelete} />} */}
+          </div>
+        </form>
+
+        <form onSubmit={handleFnameSearchSubmit}>
+          <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-red-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40">
+            <input
+              type="text"
+              placeholder="Enter Fname"
+              value={idToDelete}
+              onChange={handleDeleteChange}
+              className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500"
+            />
+            <button
+              type="submit"
+              className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
+              onClick={handleFnameSearchSubmit}
+            >
+              Search by Fname
+            </button>
+            <ExpandingArrow />
+            {/* {deleteRequest && <DeleteEntry id={idToDelete} />} */}
           </div>
         </form>
       </div>
@@ -168,22 +178,15 @@ export default function Home() {
             <p className="justify-center bold text-xl">Loading.....</p>
           </div>}>
           {
-            refreshRequest ? null : (
-              currentTable === 'PatientTable' ? <PatientTable key={tableKey} /> :
-                currentTable === 'EmployeeTable' ? <EmployeeTable key={tableKey} /> :
-                  // ... (Other table components)
-                  <TablePlaceholder />
-
-              // // If refresh request is true, then 
-              //   currentTable === 'TablePlaceHolder' ? <TablePlaceholder /> :
-              //     currentTable === 'PatientTable' ? <PatientTable /> :
-              //       currentTable === 'EmployeeTable' ? <EmployeeTable /> :
-              //         currentTable === 'MedicationTable' ? <MedicationTable /> :
-              //           currentTable === 'RoomTable' ? <RoomTable /> :
-              //             currentTable === 'EmployeeTasksTable' ? <EmployeeTasksTable /> :
-              //               currentTable === 'TechnologyTable' ? <TechnologyTable /> :
-              //                 <TablePlaceholder />
-            )}
+                currentTable === 'TablePlaceHolder' ? <TablePlaceholder /> :
+                  currentTable === 'PatientTable' ? <PatientTable tableState={tableState} setTableState={setTableState} idToDelete={idToDelete} /> :
+                    currentTable === 'EmployeeTable' ? <EmployeeTable tableState={tableState} setTableState={setTableState} idToDelete={idToDelete} /> :
+                      currentTable === 'MedicationTable' ? <MedicationTable /> :
+                        currentTable === 'RoomTable' ? <RoomTable /> :
+                          currentTable === 'EmployeeTasksTable' ? <EmployeeTasksTable /> :
+                            currentTable === 'TechnologyTable' ? <TechnologyTable /> :
+                              <TablePlaceholder />
+            }
         </Suspense>
       </div>
 

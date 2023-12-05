@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from 'react';
 import PatientDelete from '@/components/Patient/PatientDelete';
 
@@ -8,20 +9,18 @@ interface DeleteEntryProps {
 const DeleteEntry: React.FC<DeleteEntryProps> = ({ id }) => {
   const [currentTable] = useState<string>(''); // Define the type for currentTable
 
-  const [count, setCount] = useState(0);
-  const refresh = () => {
-    setCount(count + 1);
-  };
-
   useEffect(() => {
     async function deleteEntry() {
       if (currentTable === 'PatientTable') {
         await PatientDelete(id);
       }
-      refresh();
     }
 
     deleteEntry();
+    
+    // Add an alert that outputs the id
+    alert(`ID to delete: ${id}`);
+
   }, [id, currentTable]); // Include id and currentTable in the dependency array
 
   return (

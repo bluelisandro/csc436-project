@@ -1,21 +1,33 @@
-"use client";
 import Fetch from './EmployeeFetch'
-import RefreshButton from './refresh-button'
+import RefreshButton from '../refresh-button'
 import { useState, useEffect } from 'react'
 
 import Employee from '@/lib/employee'
+import Delete from '@/components/Employee/EmployeeDelete'
 
-export default function EmployeeTable() {
+interface EmployeeTableProps {
+  tableState: string;
+  setTableState: React.Dispatch<React.SetStateAction<string>>;
+  idToDelete: string; // Add idToDelete prop
+}
+
+export default function EmployeeTable({ tableState, setTableState, idToDelete }: EmployeeTableProps) {
   const [data, setData] = useState<Employee[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await Fetch();
+      let result;
+      if (tableState === 'all') {
+        result = await Fetch();
+      } else if (tableState === 'delete' && idToDelete) { // Check if idToDelete is not empty
+        result = await Delete(idToDelete); // Pass the id to the Delete function
+        setTableState('all');
+      }
       setData(result);
     }
 
     fetchData();
-  }, []);
+  }, [tableState, setTableState, idToDelete]);
 
   if (!data) return <div className="bold text-xl justify-center">Loading...</div>;
 
@@ -40,7 +52,7 @@ export default function EmployeeTable() {
         <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Type</div>
       </div>
       {/* Table head ends */}
-    
+
       {/* Table body starts */}
       {data.map((employee) => (
         <div key={employee.eid} className="grid grid-cols-6 gap-0">
