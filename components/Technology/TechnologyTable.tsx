@@ -1,6 +1,5 @@
 "use client";
 import Fetch from './TechnologyFetch'; // Make sure to import the appropriate fetch function
-import RefreshButton from './refresh-button';
 import { useState, useEffect } from 'react';
 
 import Technology from '@/lib/technology';
@@ -23,13 +22,6 @@ export default function TechnologyTable() {
   return (
     // Create card that table sits on
     <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-20 overflow-x-auto overflow-y-auto h-200">
-
-      <div className="flex justify-between items-center mb-8">
-        <div className="space-y-1">
-          <h2 className="text-xl font-semibold">Technologies</h2>
-        </div>
-        <RefreshButton />
-      </div>
 
       {/* Table head starts */}
       <div className="grid grid-cols-5 gap-0">
