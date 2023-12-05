@@ -1,23 +1,28 @@
 "use client";
-import Fetch from '@/components/PatientFetch'
+import Fetch from '@/components/Patient/PatientFetch'
 import RefreshButton from '@/components/refresh-button'
 import { useState, useEffect } from 'react'
 
 import Patient from '@/lib/patient'
 
 export default function PatientTable() {
-  const [data, setData] = useState<Patient[]>([]);
+  const [refreshRequest, setRefreshRequest] = useState(false)
 
+  const handleClick = () => {
+    setRefreshRequest(true)
+    alert("Refreshed")
+  }
+
+  const [data, setData] = useState<Patient[]>([]);
   useEffect(() => {
     async function fetchData() {
-      // Replace this with your actual fetch call
       const result = await Fetch();
       setData(result);
     }
 
     fetchData();
-  }, []);
-
+  }, []); 
+  
   if (!data) return <div>Loading...</div>;
 
   return (
@@ -28,7 +33,12 @@ export default function PatientTable() {
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">Patients</h2>
         </div>
-        <RefreshButton />
+        <button
+          className={`text-lg text-orange-300 hover:text-orange-500`}
+          onClick={handleClick}
+        >
+          Refresh
+        </button>
       </div>
 
       {/* Table head starts */}
@@ -44,7 +54,7 @@ export default function PatientTable() {
         <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">DID</div>
       </div>
       {/* Table head ends */}
-    
+
       {/* Table body starts */}
       {data.map((patient) => (
         <div key={patient.pid} className="grid grid-cols-9 gap-0">
