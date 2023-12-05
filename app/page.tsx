@@ -18,6 +18,7 @@ export const preferredRegion = 'home'
 export const dynamic = 'force-dynamic'
 
 export default function Home() {
+  // Store current table being shown in currentTable
   const [currentTable, setCurrentTable] = useState('PatientTable');
 
   const handleTableSwitch = (tableName: string) => {

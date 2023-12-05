@@ -1,11 +1,13 @@
 'use client'
-
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 
 export default function RefreshButton() {
-  const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [count, setCount] = useState(0);
+  const handleClick = () => {
+    // Update state to trigger a rerender
+    setCount(count + 1);
+  };
 
   return (
     <button
@@ -15,7 +17,7 @@ export default function RefreshButton() {
       disabled={isPending}
       onClick={() => {
         startTransition(() => {
-          router.refresh()
+          handleClick()
         })
       }}
     >
