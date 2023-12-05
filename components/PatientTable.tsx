@@ -1,6 +1,6 @@
 "use client";
-import Fetch from './PatientFetch'
-import RefreshButton from './refresh-button'
+import Fetch from '@/components/PatientFetch'
+import RefreshButton from '@/components/refresh-button'
 import { useState, useEffect } from 'react'
 
 import Patient from '@/lib/patient'
@@ -22,7 +22,7 @@ export default function PatientTable() {
 
   return (
     // Create card that table sits on
-    <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-auto w-full">
+    <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-20 overflow-x-auto overflow-y-auto h-200 w-auto">
 
       <div className="flex justify-between items-center mb-8">
         <div className="space-y-1">
