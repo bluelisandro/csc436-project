@@ -28,7 +28,7 @@ export default function PatientTable({ tableState, setTableState, idToDelete }: 
         result = await FnameSearch(idToDelete);
       }
 
-      // setTableState('all');
+      setTableState('all');
       setData(result);
     }
 
