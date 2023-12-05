@@ -33,12 +33,13 @@ export default function MedicationTable() {
 
       {/* Table head starts */}
       <div className="grid grid-cols-7 gap-0">
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">EID</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Fname</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Lname</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Salary</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Address</div>
-        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Type</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Mname</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Exp. Date</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Price</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Company</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Amount</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">Med Type</div>
+        <div className="row-span-2 flex items-center justify-center border-[1px] text-xl font-semibold py-2 px-2">MID</div>
       </div>
       {/* Table head ends */}
     

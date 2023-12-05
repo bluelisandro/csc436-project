@@ -10,7 +10,6 @@ export default function EmployeeTable() {
 
   useEffect(() => {
     async function fetchData() {
-      // Replace this with your actual fetch call
       const result = await Fetch();
       setData(result);
     }
