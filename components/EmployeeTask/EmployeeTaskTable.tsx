@@ -1,22 +1,41 @@
-"use client";
-import FetchTasks from '@/components/EmployeeTaskFetch'
-import RefreshButton from './refresh-button'
 import { useState, useEffect } from 'react'
 
-import EmployeeTask from '@/lib/employeetask'
+import RefreshButton from '../refresh-button'
 
-export default function EmployeeTaskTable() {
+import EmployeeTask from '@/lib/employeetask'
+import Fetch from '@/components/EmployeeTask/EmployeeTaskFetch'
+import Delete from '@/components/EmployeeTask/EmployeeTaskDelete';
+// import FnameSearch from '@/components/EmployeeTask/EmployeeTaskFnameSearch'
+
+
+interface EmployeeTaskTableProps {
+  tableState: string;
+  setTableState: React.Dispatch<React.SetStateAction<string>>;
+  actionInput: string; // Add actionInput prop
+}
+
+export default function EmployeeTaskTable({ tableState, setTableState, actionInput }: EmployeeTaskTableProps) {
   const [data, setData] = useState<EmployeeTask[]>([]);
 
   useEffect(() => {
-    async function fetchTaskData() {
-      // Replace this with your actual fetch call
-      const result = await FetchTasks();
+    async function fetchData() {
+      let result;
+
+      if (tableState === 'all' || actionInput === '') {
+        result = await Fetch();
+      } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
+        result = await Delete(actionInput); // Pass the id to the Delete function
+      }
+      // else if (tableState === 'fnameSearch' && actionInput) {
+      //   result = await FnameSearch(actionInput);
+      // }
+
+      // setTableState('all');
       setData(result);
     }
 
-    fetchTaskData();
-  }, []);
+    fetchData();
+  }, [tableState, setTableState, actionInput]);
 
   if (!data) return <div className="bold text-xl justify-center">Loading...</div>;
 

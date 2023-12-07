@@ -1,21 +1,39 @@
-"use client";
-import Fetch from '@/components/RoomFetch'; // Replace with your actual Room fetching mechanism
-import RefreshButton from './refresh-button';
 import { useState, useEffect } from 'react';
 
-import Room from '@/lib/room'; // Importing the Room type
+import RefreshButton from '../refresh-button';
 
-export default function RoomTable() {
+import Room from '@/lib/room'; // Importing the Room type
+import Fetch from '@/components/Room/RoomFetch';
+import Delete from '@/components/Room/RoomDelete';
+
+interface RoomTableProps {
+  tableState: string;
+  setTableState: React.Dispatch<React.SetStateAction<string>>;
+  actionInput: string; // Add actionInput prop
+}
+
+export default function RoomTable({ tableState, setTableState, actionInput }: RoomTableProps) {
   const [data, setData] = useState<Room[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await Fetch();
+      let result;
+
+      if (tableState === 'all' || actionInput === '') {
+        result = await Fetch();
+      } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
+        result = await Delete(actionInput); // Pass the id to the Delete function
+      }
+      // else if (tableState === 'fnameSearch' && actionInput) {
+      //   result = await FnameSearch(actionInput);
+      // }
+
+      // setTableState('all');
       setData(result);
     }
 
     fetchData();
-  }, []);
+  }, [tableState, setTableState, actionInput]);
 
   if (!data) return <div className="bold text-xl justify-center">Loading...</div>;
 
