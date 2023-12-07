@@ -5,6 +5,7 @@ import RefreshButton from '../refresh-button';
 import Room from '@/lib/room'; // Importing the Room type
 import Fetch from '@/components/Room/RoomFetch';
 import Delete from '@/components/Room/RoomDelete';
+import Search from '@/components/Room/RoomSearch';
 
 interface RoomTableProps {
   tableState: string;
@@ -24,11 +25,10 @@ export default function RoomTable({ tableState, setTableState, actionInput }: Ro
       } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
         result = await Delete(actionInput); // Pass the id to the Delete function
       }
-      // else if (tableState === 'fnameSearch' && actionInput) {
-      //   result = await FnameSearch(actionInput);
-      // }
+      else if (tableState === 'search' && actionInput) {
+        result = await Search(actionInput);
+      }
 
-      // setTableState('all');
       setData(result);
     }
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 import Employee from '@/lib/employee'
 import Delete from '@/components/Employee/EmployeeDelete'
+import Search from '@/components/Employee/EmployeeSearch'
 
 interface EmployeeTableProps {
   tableState: string;
@@ -17,12 +18,16 @@ export default function EmployeeTable({ tableState, setTableState, actionInput }
   useEffect(() => {
     async function fetchData() {
       let result;
-      if (tableState === 'all') {
+
+      if (tableState === 'all' || actionInput === '') {
         result = await Fetch();
       } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
         result = await Delete(actionInput); // Pass the id to the Delete function
-        setTableState('all');
       }
+      else if (tableState === 'search' && actionInput) {
+        result = await Search(actionInput);
+      }
+      
       setData(result);
     }
 

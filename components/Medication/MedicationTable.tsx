@@ -5,7 +5,7 @@ import RefreshButton from '../refresh-button'
 import Medication from '@/lib/medication'
 import Fetch from '@/components/Medication/MedicationFetch'
 import Delete from '@/components/Medication/MedicationDelete';
-// import FnameSearch from '@/components/Medication/MedicationFnameSearch'
+import Search from '@/components/Medication/MedicationSearch'
 
 interface MedicationTableProps {
   tableState: string;
@@ -25,11 +25,10 @@ export default function MedicationTable({ tableState, setTableState, actionInput
       } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
         result = await Delete(actionInput); // Pass the id to the Delete function
       }
-      // else if (tableState === 'fnameSearch' && actionInput) {
-      //   result = await FnameSearch(actionInput);
-      // }
+      else if (tableState === 'search' && actionInput) {
+        result = await Search(actionInput);
+      }
 
-      // setTableState('all');
       setData(result);
     }
 

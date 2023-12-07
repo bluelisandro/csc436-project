@@ -5,8 +5,7 @@ import RefreshButton from '../refresh-button'
 import EmployeeTask from '@/lib/employeetask'
 import Fetch from '@/components/EmployeeTask/EmployeeTaskFetch'
 import Delete from '@/components/EmployeeTask/EmployeeTaskDelete';
-// import FnameSearch from '@/components/EmployeeTask/EmployeeTaskFnameSearch'
-
+import Search from '@/components/EmployeeTask/EmployeeTaskSearch';
 
 interface EmployeeTaskTableProps {
   tableState: string;
@@ -26,11 +25,10 @@ export default function EmployeeTaskTable({ tableState, setTableState, actionInp
       } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
         result = await Delete(actionInput); // Pass the id to the Delete function
       }
-      // else if (tableState === 'fnameSearch' && actionInput) {
-      //   result = await FnameSearch(actionInput);
-      // }
+      else if (tableState === 'search' && actionInput) {
+        result = await Search(actionInput);
+      }
 
-      // setTableState('all');
       setData(result);
     }
 

@@ -5,8 +5,7 @@ import RefreshButton from '../refresh-button'
 import Technology from '@/lib/technology';
 import Fetch from '@/components/Technology/TechnologyFetch'; // Make sure to import the appropriate fetch function
 import Delete from '@/components/Technology/TechnologyDelete'
-// import FnameSearch from '@/components/Technology/TechnologyFnameSearch';
-
+import Search from '@/components/Technology/TechnologySearch'
 
 interface TechnologyTableProps {
   tableState: string;
@@ -26,11 +25,10 @@ export default function TechnologyTable({ tableState, setTableState, actionInput
       } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
         result = await Delete(actionInput); // Pass the id to the Delete function
       }
-      // else if (tableState === 'fnameSearch' && actionInput) {
-      //   result = await FnameSearch(actionInput);
-      // }
+      else if (tableState === 'search' && actionInput) {
+        result = await Search(actionInput);
+      }
 
-      // setTableState('all');
       setData(result);
     }
 
