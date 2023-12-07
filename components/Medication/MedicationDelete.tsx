@@ -5,8 +5,8 @@ export default async function Delete(id) {
 
   try {
     alert("Deleted entry MID = " + id)
-    await sql`DELETE FROM technology WHERE serial_number = ${id};`
-    data = await sql`SELECT * FROM technology;`
+    await sql`DELETE FROM medication WHERE mid = ${id};`
+    data = await sql`SELECT * FROM medication;`
   } catch (e: any) {
     if (e) {
       throw e

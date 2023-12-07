@@ -8,10 +8,10 @@ import Delete from '@/components/Employee/EmployeeDelete'
 interface EmployeeTableProps {
   tableState: string;
   setTableState: React.Dispatch<React.SetStateAction<string>>;
-  idToDelete: string; // Add idToDelete prop
+  actionInput: string; // Add actionInput prop
 }
 
-export default function EmployeeTable({ tableState, setTableState, idToDelete }: EmployeeTableProps) {
+export default function EmployeeTable({ tableState, setTableState, actionInput }: EmployeeTableProps) {
   const [data, setData] = useState<Employee[]>([]);
 
   useEffect(() => {
@@ -19,15 +19,15 @@ export default function EmployeeTable({ tableState, setTableState, idToDelete }:
       let result;
       if (tableState === 'all') {
         result = await Fetch();
-      } else if (tableState === 'delete' && idToDelete) { // Check if idToDelete is not empty
-        result = await Delete(idToDelete); // Pass the id to the Delete function
+      } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
+        result = await Delete(actionInput); // Pass the id to the Delete function
         setTableState('all');
       }
       setData(result);
     }
 
     fetchData();
-  }, [tableState, setTableState, idToDelete]);
+  }, [tableState, setTableState, actionInput]);
 
   if (!data) return <div className="bold text-xl justify-center">Loading...</div>;
 

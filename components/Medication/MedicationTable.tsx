@@ -1,22 +1,40 @@
-"use client";
-import Fetch from '@/components/MedicationFetch'
-import RefreshButton from './refresh-button'
 import { useState, useEffect } from 'react'
 
-import Medication from '@/lib/medication'
+import RefreshButton from '../refresh-button'
 
-export default function MedicationTable() {
+import Medication from '@/lib/medication'
+import Fetch from '@/components/Medication/MedicationFetch'
+import Delete from '@/components/Medication/MedicationDelete';
+// import FnameSearch from '@/components/Medication/MedicationFnameSearch'
+
+interface MedicationTableProps {
+  tableState: string;
+  setTableState: React.Dispatch<React.SetStateAction<string>>;
+  actionInput: string; // Add actionInput prop
+}
+
+export default function MedicationTable({ tableState, setTableState, actionInput }: MedicationTableProps) {
   const [data, setData] = useState<Medication[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-      // Replace this with your actual fetch call
-      const result = await Fetch();
+      let result;
+
+      if (tableState === 'all' || actionInput === '') {
+        result = await Fetch();
+      } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
+        result = await Delete(actionInput); // Pass the id to the Delete function
+      }
+      // else if (tableState === 'fnameSearch' && actionInput) {
+      //   result = await FnameSearch(actionInput);
+      // }
+
+      // setTableState('all');
       setData(result);
     }
 
     fetchData();
-  }, []);
+  }, [tableState, setTableState, actionInput]);
 
   if (!data) return <div className="bold text-xl justify-center">Loading...</div>;
 

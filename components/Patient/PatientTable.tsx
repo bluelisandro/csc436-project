@@ -1,39 +1,40 @@
-import Fetch from '@/components/Patient/PatientFetch';
-import Delete from '@/components/Patient/PatientDelete';
 import RefreshButton from '@/components/refresh-button';
 import { useState, useEffect } from 'react';
+
 import Patient from '@/lib/patient';
+import Fetch from '@/components/Patient/PatientFetch';
+import Delete from '@/components/Patient/PatientDelete';
 import FnameSearch from '@/components/Patient/PatientFnameSearch'
 
 // Inside PatientTable function in PatientTable.tsx
 interface PatientTableProps {
   tableState: string;
   setTableState: React.Dispatch<React.SetStateAction<string>>;
-  idToDelete: string; // Add idToDelete prop
+  actionInput: string; // Add actionInput prop
 }
 
-export default function PatientTable({ tableState, setTableState, idToDelete }: PatientTableProps) {
+export default function PatientTable({ tableState, setTableState, actionInput }: PatientTableProps) {
   const [data, setData] = useState<Patient[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       let result;
 
-      if (tableState === 'all' || idToDelete === '') {
+      if (tableState === 'all' || actionInput === '') {
         result = await Fetch();
-      } else if (tableState === 'delete' && idToDelete) { // Check if idToDelete is not empty
-        result = await Delete(idToDelete); // Pass the id to the Delete function
+      } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
+        result = await Delete(actionInput); // Pass the id to the Delete function
       }
-      else if (tableState === 'fnameSearch' && idToDelete) {
-        result = await FnameSearch(idToDelete);
+      else if (tableState === 'fnameSearch' && actionInput) {
+        result = await FnameSearch(actionInput);
       }
 
-      setTableState('all');
+      // setTableState('all');
       setData(result);
     }
 
     fetchData();
-  }, [tableState, setTableState, idToDelete]);
+  }, [tableState, setTableState, actionInput]);
 
   // useEffect(() => {
   //   if (tableState === 'delete') {
@@ -46,8 +47,15 @@ export default function PatientTable({ tableState, setTableState, idToDelete }: 
   if (!data) return <div>Loading...</div>;
 
   return (
-    // Create card that table sits on
-    <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-20 overflow-x-auto overflow-y-auto h-200 w-auto">
+   // Create card that table sits on
+   <div className="bg-white/30 py-10 px-10 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg mx-20 overflow-x-auto overflow-y-auto w- h-200">
+
+   <div className="flex justify-between items-center mb-8">
+     <div className="space-y-1">
+       <h2 className="text-xl font-semibold">Patients</h2>
+     </div>
+     <RefreshButton />
+   </div>
 
       {/* Table head starts */}
       <div className="grid grid-cols-9 gap-0">
