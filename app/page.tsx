@@ -12,7 +12,6 @@ import RoomTable from '@/components/Room/RoomTable'
 import EmployeeTasksTable from '@/components/EmployeeTask/EmployeeTaskTable'
 import TechnologyTable from '@/components/Technology/TechnologyTable'
 import TablePlaceholder from '@/components/TablePlaceholder'
-import DeleteEntry from '@/components/DeleteEntry'
 
 export const runtime = 'edge'
 export const preferredRegion = 'home'
@@ -24,6 +23,8 @@ export default function Home() {
   const [actionInput, setactionInput] = useState(''); // ID passed into correct table component to be deleted
   const [tableState, setTableState] = useState('all') // all, delete, fnameSearch
   const [inputValue, setInputValue] = useState('');
+  const [deletePlaceholder, setDeletePlaceholder] = useState('Input')
+  const [searchPlaceholder, setSearchPlaceholder] = useState('Input')
 
   const handleTableSwitch = (tableName: string) => {
     setCurrentTable(tableName);
@@ -37,9 +38,9 @@ export default function Home() {
     setInputValue(''); // Clear the input field after submission
   };
 
-  const handleFnameSearchSubmit = (e) => {
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setTableState('fnameSearch');
+    setTableState('search');
     setactionInput(inputValue); // Pass input value to state or directly to the table component as needed
     setInputValue(''); // Clear the input field after submission
   };
@@ -48,7 +49,37 @@ export default function Home() {
     setInputValue(e.target.value);
   };
 
+  // Change the placeholder text for the delete and search input fields based on the current table
+  useEffect(() => {
+    function setPlaceholders() {
+      if (currentTable === 'PatientTable') {
+        setDeletePlaceholder('Enter PID');
+        setSearchPlaceholder('Enter First Name');
+      }
+      else if (currentTable === 'EmployeeTable') {
+        setDeletePlaceholder('Enter EID');
+        setSearchPlaceholder('Enter First Name');
+      }
+      else if (currentTable === 'MedicationTable') {
+        setDeletePlaceholder('Enter MID');
+        setSearchPlaceholder('Enter Medication Name');
+      }
+      else if (currentTable === 'RoomTable') {
+        setDeletePlaceholder('Enter Room ID');
+        setSearchPlaceholder('Enter Room Number');
+      }
+      else if (currentTable === 'EmployeeTaskTable') {
+        setDeletePlaceholder('Enter Task ID');
+        setSearchPlaceholder('Enter Task Description');
+      }
+      else if (currentTable === 'TechnologyTable') {
+        setDeletePlaceholder('Enter Serial Number');
+        setSearchPlaceholder('Enter Tname');
+      }
+    }
 
+    setPlaceholders();
+  }, [currentTable]);
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen">
@@ -71,7 +102,7 @@ export default function Home() {
         {/* View Patients Button */}
         <div
           onClick={() => handleTableSwitch('PatientTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'PatientTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30' } shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'PatientTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
         >
           <p>Patients</p>
           <ExpandingArrow />
@@ -80,7 +111,7 @@ export default function Home() {
         {/* View Employees Button */}
         <div
           onClick={() => handleTableSwitch('EmployeeTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'EmployeeTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30' } shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'EmployeeTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
         >
           <p>Employees</p>
           <ExpandingArrow />
@@ -89,7 +120,7 @@ export default function Home() {
         {/* View Medications Button */}
         <div
           onClick={() => handleTableSwitch('MedicationTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'MedicationTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30' } shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'MedicationTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
         >
           <p>Medications</p>
           <ExpandingArrow />
@@ -98,7 +129,7 @@ export default function Home() {
         {/* View Rooms Button */}
         <div
           onClick={() => handleTableSwitch('RoomTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'RoomTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30' } shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'RoomTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
         >
           <p>Rooms</p>
           <ExpandingArrow />
@@ -107,7 +138,7 @@ export default function Home() {
         {/* View Technology Button */}
         <div
           onClick={() => handleTableSwitch('TechnologyTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'TechnologyTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30' } shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'TechnologyTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
         >
           <p>Technology</p>
           <ExpandingArrow />
@@ -116,7 +147,7 @@ export default function Home() {
         {/* View EmployeeTasks Button */}
         <div
           onClick={() => handleTableSwitch('EmployeeTaskTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'EmployeeTaskTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30' } shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'EmployeeTaskTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
         >
           <p>Employee Tasks</p>
           <ExpandingArrow />
@@ -135,7 +166,7 @@ export default function Home() {
           <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-red-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40">
             <input
               type="text"
-              placeholder="Enter ID"
+              placeholder={deletePlaceholder}
               value={inputValue}
               onChange={handleInputChange}
               className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500"
@@ -144,18 +175,18 @@ export default function Home() {
               type="submit"
               className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
             >
-              Delete by ID
+              Delete
             </button>
             <ExpandingArrow />
             {/* {deleteRequest && <DeleteEntry id={actionInput} />} */}
           </div>
         </form>
 
-        <form onSubmit={handleFnameSearchSubmit}>
+        <form onSubmit={handleSearchSubmit}>
           <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-blue-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40">
             <input
               type="text"
-              placeholder="Enter Fname"
+              placeholder={searchPlaceholder}
               value={inputValue}
               onChange={handleInputChange}
               className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500"
@@ -164,10 +195,9 @@ export default function Home() {
               type="submit"
               className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
             >
-              Search by Fname
+              Search
             </button>
             <ExpandingArrow />
-            {/* {deleteRequest && <DeleteEntry id={actionInput} />} */}
           </div>
         </form>
       </div>

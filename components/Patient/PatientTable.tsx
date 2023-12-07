@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Patient from '@/lib/patient';
 import Fetch from '@/components/Patient/PatientFetch';
 import Delete from '@/components/Patient/PatientDelete';
-import FnameSearch from '@/components/Patient/PatientFnameSearch'
+import Search from '@/components/Patient/PatientSearch'
 
 // Inside PatientTable function in PatientTable.tsx
 interface PatientTableProps {
@@ -25,24 +25,15 @@ export default function PatientTable({ tableState, setTableState, actionInput }:
       } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
         result = await Delete(actionInput); // Pass the id to the Delete function
       }
-      else if (tableState === 'fnameSearch' && actionInput) {
-        result = await FnameSearch(actionInput);
+      else if (tableState === 'search' && actionInput) {
+        result = await Search(actionInput);
       }
 
-      // setTableState('all');
       setData(result);
     }
 
     fetchData();
   }, [tableState, setTableState, actionInput]);
-
-  // useEffect(() => {
-  //   if (tableState === 'delete') {
-  //     // Call the Delete function when tableState is 'delete'
-  //     Delete(); // You might need to pass appropriate parameters here
-  //     setTableState('all'); // Reset tableState to prevent continuous deletion
-  //   }
-  // }, [tableState]);
 
   if (!data) return <div>Loading...</div>;
 
