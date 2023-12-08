@@ -5,12 +5,13 @@ import Patient from '@/lib/patient';
 import Fetch from '@/components/Patient/PatientFetch';
 import Delete from '@/components/Patient/PatientDelete';
 import Search from '@/components/Patient/PatientSearch'
+import Insert from '@/components/Patient/PatientInsert'
 
 // Inside PatientTable function in PatientTable.tsx
 interface PatientTableProps {
   tableState: string;
   setTableState: React.Dispatch<React.SetStateAction<string>>;
-  actionInput: string; // Add actionInput prop
+  actionInput: any;
 }
 
 export default function PatientTable({ tableState, setTableState, actionInput }: PatientTableProps) {
@@ -27,6 +28,9 @@ export default function PatientTable({ tableState, setTableState, actionInput }:
       }
       else if (tableState === 'search' && actionInput) {
         result = await Search(actionInput);
+      }
+      else if (tableState === 'insert') {
+        result = await Insert(actionInput);
       }
 
       setData(result);
