@@ -6,6 +6,7 @@ import Fetch from '@/components/Patient/PatientFetch';
 import Delete from '@/components/Patient/PatientDelete';
 import Search from '@/components/Patient/PatientSearch'
 import Insert from '@/components/Patient/PatientInsert'
+import Update from '@/components/Patient/PatientUpdate'
 
 // Inside PatientTable function in PatientTable.tsx
 interface PatientTableProps {
@@ -31,6 +32,9 @@ export default function PatientTable({ tableState, setTableState, actionInput }:
       }
       else if (tableState === 'insert') {
         result = await Insert(actionInput);
+      }
+      else if (tableState === 'update') {
+        result = await Update(actionInput);
       }
 
       setData(result);
