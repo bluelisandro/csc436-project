@@ -24,7 +24,6 @@ export default function Home() {
   const [actionInput, setActionInput] = useState<any>(); // ID passed into correct table component to be deleted
   const [tableState, setTableState] = useState('all') // all, delete, fnameSearch
   const [inputValue, setInputValue] = useState('') // Input value from the delete and search input fields
-
   const [insertValues, setInsertValues] = useState({
     pid: '',
     fname: '',
@@ -36,9 +35,24 @@ export default function Home() {
     sexual_orientation: '',
     doctorid: ''
   })
-
   const [deletePlaceholder, setDeletePlaceholder] = useState('Input')
   const [searchPlaceholder, setSearchPlaceholder] = useState('Input')
+  const [updateValues, setUpdateValues] = useState({insurance_no: '', pid: ''})
+
+  const handleUpdateSubmit = (e) => {
+    e.preventDefault()
+    setTableState('update')
+    setActionInput(updateValues)
+    setUpdateValues({insurance_no: '', pid: ''})
+  }
+
+  const handleUpdatePID = (e) => {
+    setUpdateValues({ ...updateValues, pid: e.target.value });
+  };
+
+  const handleUpdateInsuranceNo = (e) => {
+    setUpdateValues({ ...updateValues, insurance_no: e.target.value });
+  };
 
   const handlePID = (e) => {
     setInsertValues({ ...insertValues, pid: e.target.value })
@@ -270,7 +284,8 @@ export default function Home() {
 
       </div>
 
-      {currentTable === 'PatientTable' ? (<div className="flex mt-0 items-center">
+      {currentTable === 'PatientTable' ? (
+      <div className="flex mt-0 items-center">
         {/* ----- Insert -----*/}
         <form onSubmit={handleInsertSubmit}>
           <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-green-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
@@ -349,7 +364,41 @@ export default function Home() {
             </div>
           </div>
         </form>
-      </div>) : null}
+
+        <div className="flex mt-0 items-center">
+        {/* ----- Update -----*/}
+        <form onSubmit={handleUpdateSubmit}>
+          <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-orange-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
+            <div>
+              <input
+                type="text"
+                placeholder="PID"
+                value={updateValues.pid}
+                onChange={handleUpdatePID} 
+                className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
+              />
+              <input
+                type="text"
+                placeholder="Insurance No."
+                value={updateValues.insurance_no}
+                onChange={handleUpdateInsuranceNo} 
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+            </div>              
+              <button
+                type="submit"
+                className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
+              >
+                Update Patient's Insurance No. by PID
+              </button>
+          </div>
+        </form>
+      </div>
+      </div>
+      
+      
+      
+      ) : null}
 
       {/* ----- End Table Action Buttons -----*/}
 
