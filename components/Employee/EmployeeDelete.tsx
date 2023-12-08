@@ -9,6 +9,7 @@ export default async function Delete(id) {
     data = await sql`SELECT * FROM employee;`
   } catch (e: any) {
     if (e) {
+      alert("Error: ")
       throw e
     }
   }

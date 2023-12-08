@@ -5,7 +5,7 @@ import Patient from '@/lib/patient';
 import Fetch from '@/components/Patient/PatientFetch';
 import Delete from '@/components/Patient/PatientDelete';
 import Search from '@/components/Patient/PatientSearch'
-import Insert from '@/components/Patient/PatientInsert'
+import Insert from '@/components/Patient/Insert'
 import Update from '@/components/Patient/PatientUpdate'
 
 // Inside PatientTable function in PatientTable.tsx

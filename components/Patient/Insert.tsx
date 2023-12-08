@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres'
+import { sql } from "@vercel/postgres"
 
 export default async function Insert(values: any) {
   let data: any
@@ -6,7 +6,7 @@ export default async function Insert(values: any) {
   try {
     // INSERT INTO Patient (pid, fname, lname, dob, reasonforcheckingin, insurance_no, address, sexual_orientation, doctorid)
     // VALUES 
-    // (11, 'David', 'Lee', '1979-07-08', 'General checkup', 888888888, '567 Cedar St', 'male', 9);
+    // (11, "David", "Lee", "1979-07-08", "General checkup", 888888888, "567 Cedar St", "male", 9);
 
     // alert("Deleted entry PID = " + id)
 
