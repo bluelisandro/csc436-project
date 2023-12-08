@@ -12,6 +12,7 @@ import RoomTable from '@/components/Room/RoomTable'
 import EmployeeTasksTable from '@/components/EmployeeTask/EmployeeTaskTable'
 import TechnologyTable from '@/components/Technology/TechnologyTable'
 import TablePlaceholder from '@/components/TablePlaceholder'
+import Patient from '@/lib/patient'
 
 export const runtime = 'edge'
 export const preferredRegion = 'home'
@@ -20,11 +21,77 @@ export const dynamic = 'force-dynamic'
 export default function Home() {
   // Store current table being shown in currentTable
   const [currentTable, setCurrentTable] = useState('PatientTable'); // Default to PatientTable
-  const [actionInput, setactionInput] = useState(''); // ID passed into correct table component to be deleted
+  const [actionInput, setActionInput] = useState<any>(); // ID passed into correct table component to be deleted
   const [tableState, setTableState] = useState('all') // all, delete, fnameSearch
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('') // Input value from the delete and search input fields
+
+  const [insertValues, setInsertValues] = useState({
+    pid: '',
+    fname: '',
+    lname: '',
+    dob: '',
+    reasonforcheckingin: '',
+    insurance_no: '',
+    address: '',
+    sexual_orientation: '',
+    doctorid: ''
+  })
+
   const [deletePlaceholder, setDeletePlaceholder] = useState('Input')
   const [searchPlaceholder, setSearchPlaceholder] = useState('Input')
+
+  const handlePID = (e) => {
+    setInsertValues({ ...insertValues, pid: e.target.value })
+  }
+
+  const handleFname = (e) => {
+    setInsertValues({ ...insertValues, fname: e.target.value })
+  }
+
+  const handleLname = (e) => {
+    setInsertValues({ ...insertValues, lname: e.target.value });
+  };
+
+  const handleDOB = (e) => {
+    setInsertValues({ ...insertValues, dob: e.target.value });
+  };
+
+  const handleReasonForCheckingIn = (e) => {
+    setInsertValues({ ...insertValues, reasonforcheckingin: e.target.value });
+  };
+
+  const handleInsuranceNo = (e) => {
+    setInsertValues({ ...insertValues, insurance_no: e.target.value });
+  };
+
+  const handleAddress = (e) => {
+    setInsertValues({ ...insertValues, address: e.target.value });
+  };
+
+  const handleSexualOrientation = (e) => {
+    setInsertValues({ ...insertValues, sexual_orientation: e.target.value });
+  };
+
+  const handleDoctorID = (e) => {
+    setInsertValues({ ...insertValues, doctorid: e.target.value });
+  };
+
+  const handleInsertSubmit = (e) => {
+    e.preventDefault()
+    setTableState('insert')
+    setActionInput(insertValues)
+    setInsertValues({
+      pid: '',
+      fname: '',
+      lname: '',
+      dob: '',
+      reasonforcheckingin: '',
+      insurance_no: '',
+      address: '',
+      sexual_orientation: '',
+      doctorid: ''
+    })
+  }
 
   const handleTableSwitch = (tableName: string) => {
     setCurrentTable(tableName);
@@ -34,14 +101,14 @@ export default function Home() {
   const handleDeleteSubmit = (e) => {
     e.preventDefault();
     setTableState('delete');
-    setactionInput(inputValue); // Pass input value to state or directly to the table component as needed
+    setActionInput(inputValue); // Pass input value to state or directly to the table component as needed
     setInputValue(''); // Clear the input field after submission
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setTableState('search');
-    setactionInput(inputValue); // Pass input value to state or directly to the table component as needed
+    setActionInput(inputValue); // Pass input value to state or directly to the table component as needed
     setInputValue(''); // Clear the input field after submission
   };
 
@@ -96,7 +163,7 @@ export default function Home() {
       <h4 className="text-gray-600 text-sm font-medium pb-8">Created by Ryan Fish and Lisandro Nunez</h4>
 
       {/* ----- Start Table View Buttons-----*/}
-      <div className="flex mt-10 items-center">
+      <div className="flex mt-2 items-center">
         <h4 className="text-gray-600 text-md font-semibold mr-4 mb-6">Tables</h4> {/* Changed: Added 'mr-4' for margin */}
 
         {/* View Patients Button */}
@@ -158,10 +225,10 @@ export default function Home() {
 
 
       {/* ----- Start Table Action Buttons-----*/}
-      <div className="flex mt-10 items-center">
+      <div className="flex mt-0 items-center">
         <h4 className="text-gray-600 text-md font-semibold mr-4 mb-6">Actions</h4>
 
-        {/* ----- Delete Entry -----*/}
+        {/* ----- Delete -----*/}
         <form onSubmit={handleDeleteSubmit}>
           <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-red-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40">
             <input
@@ -178,10 +245,10 @@ export default function Home() {
               Delete
             </button>
             <ExpandingArrow />
-            {/* {deleteRequest && <DeleteEntry id={actionInput} />} */}
           </div>
         </form>
 
+        {/* ----- Search -----*/}
         <form onSubmit={handleSearchSubmit}>
           <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-blue-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40">
             <input
@@ -200,7 +267,90 @@ export default function Home() {
             <ExpandingArrow />
           </div>
         </form>
+
       </div>
+
+      {currentTable === 'PatientTable' ? (<div className="flex mt-0 items-center">
+        {/* ----- Insert -----*/}
+        <form onSubmit={handleInsertSubmit}>
+          <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-green-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
+            <div>
+              <input
+                type="text"
+                placeholder="pid"
+                value={insertValues.pid}
+                onChange={handlePID} 
+                className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
+              />
+              <input
+                type="text"
+                placeholder="fname"
+                value={insertValues.fname}
+                onChange={handleFname} 
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+              <input
+                type="text"
+                placeholder="lname"
+                value={insertValues.lname}
+                onChange={handleLname} 
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+              <input
+                type="text"
+                placeholder="dob"
+                value={insertValues.dob}
+                onChange={handleDOB}
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+              <input
+                type="text"
+                placeholder="reason for checking in"
+                value={insertValues.reasonforcheckingin}
+                onChange={handleReasonForCheckingIn}
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+            </div>
+            <div className="">
+              <input
+                type="text"
+                placeholder="insurance number"
+                value={insertValues.insurance_no}
+                onChange={handleInsuranceNo}
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+              <input
+                type="text"
+                placeholder="address"
+                value={insertValues.address}
+                onChange={handleAddress}
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+              <input
+                type="text"
+                placeholder="sex"
+                value={insertValues.sexual_orientation}
+                onChange={handleSexualOrientation}
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+              <input
+                type="text"
+                placeholder="doctor ID"
+                value={insertValues.doctorid}
+                onChange={handleDoctorID} 
+                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+              />
+              <button
+                type="submit"
+                className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
+              >
+                Add to Table
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>) : null}
+
       {/* ----- End Table Action Buttons -----*/}
 
 
