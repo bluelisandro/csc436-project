@@ -24,77 +24,55 @@ export default function Home() {
   const [actionInput, setActionInput] = useState<any>(); // ID passed into correct table component to be deleted
   const [tableState, setTableState] = useState("all") // all, delete, fnameSearch
   const [inputValue, setInputValue] = useState("") // Input value from the delete and search input fields
-  const [insertValues, setInsertValues] = useState({
-    pid: "",
-    fname: "",
-    lname: "",
-    dob: "",
-    reasonforcheckingin: "",
-    insurance_no: "",
-    address: "",
-    sexual_orientation: "",
-    doctorid: ""
-  })
   const [deletePlaceholder, setDeletePlaceholder] = useState("Input")
   const [searchPlaceholder, setSearchPlaceholder] = useState("Input")
-  const [updateValues, setUpdateValues] = useState({insurance_no: "", pid: ""})
 
-  const handleUpdateSubmit = (e) => {
-    e.preventDefault()
-    setTableState("update")
-    setActionInput(updateValues)
-    setUpdateValues({insurance_no: "", pid: ""})
+  // *************-------------------- Patient Insert and Update --------------------*************
+  const [insertPatientValues, setInsertPatientValues] = useState({ pid: '', fname: '', lname: '', dob: '', reasonforcheckingin: '', insurance_no: '', address: '', sexual_orientation: '', doctorid: '', })
+  const [updatePatientValues, setUpdatePatientValues] = useState({ insurance_no: "", pid: "" })
+
+  // ----- Insert -----
+  const handleInsertPatientPid = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, pid: e.target.value })
   }
 
-  const handleUpdatePID = (e) => {
-    setUpdateValues({ ...updateValues, pid: e.target.value });
-  };
-
-  const handleUpdateInsuranceNo = (e) => {
-    setUpdateValues({ ...updateValues, insurance_no: e.target.value });
-  };
-
-  const handlePID = (e) => {
-    setInsertValues({ ...insertValues, pid: e.target.value })
+  const handleInsertPatientFname = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, fname: e.target.value })
   }
 
-  const handleFname = (e) => {
-    setInsertValues({ ...insertValues, fname: e.target.value })
-  }
-
-  const handleLname = (e) => {
-    setInsertValues({ ...insertValues, lname: e.target.value });
+  const handleInsertPatientLname = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, lname: e.target.value });
   };
 
-  const handleDOB = (e) => {
-    setInsertValues({ ...insertValues, dob: e.target.value });
+  const handleInsertPatientDob = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, dob: e.target.value });
   };
 
-  const handleReasonForCheckingIn = (e) => {
-    setInsertValues({ ...insertValues, reasonforcheckingin: e.target.value });
+  const handleInsertPatientReasonForCheckingIn = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, reasonforcheckingin: e.target.value });
   };
 
-  const handleInsuranceNo = (e) => {
-    setInsertValues({ ...insertValues, insurance_no: e.target.value });
+  const handleInsertPatientInsuranceNo = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, insurance_no: e.target.value });
   };
 
-  const handleAddress = (e) => {
-    setInsertValues({ ...insertValues, address: e.target.value });
+  const handleInsertPatientAddress = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, address: e.target.value });
   };
 
-  const handleSexualOrientation = (e) => {
-    setInsertValues({ ...insertValues, sexual_orientation: e.target.value });
+  const handleInsertPatientSexualOrientation = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, sexual_orientation: e.target.value });
   };
 
-  const handleDoctorID = (e) => {
-    setInsertValues({ ...insertValues, doctorid: e.target.value });
+  const handleInsertPatientDoctorID = (e) => {
+    setInsertPatientValues({ ...insertPatientValues, doctorid: e.target.value });
   };
 
-  const handleInsertSubmit = (e) => {
+  const handleInsertPatientSubmit = (e) => {
     e.preventDefault()
     setTableState("insert")
-    setActionInput(insertValues)
-    setInsertValues({
+    setActionInput(insertPatientValues)
+    setInsertPatientValues({
       pid: "",
       fname: "",
       lname: "",
@@ -106,6 +84,205 @@ export default function Home() {
       doctorid: ""
     })
   }
+
+  // ----- Update ---
+  const handleUpdatePatientSubmit = (e) => {
+    e.preventDefault()
+    setTableState("update")
+    setActionInput(updatePatientValues)
+    setUpdatePatientValues({ insurance_no: "", pid: "" })
+  }
+
+  const handleUpdatePatientPID = (e) => {
+    setUpdatePatientValues({ ...updatePatientValues, pid: e.target.value });
+  };
+
+  const handleUpdatePatientInsuranceNo = (e) => {
+    setUpdatePatientValues({ ...updatePatientValues, insurance_no: e.target.value });
+  };
+
+  // *************-------------------- Employee Insert and Update --------------------*************
+
+  // ----- Insert -----
+  const [insertEmployeeValues, setInsertEmployeeValues] = useState({ eid: '', fname: '', lname: '', salary: '', address: '', etype: '', })
+
+  const handleInsertEmployeeEid = (e) => {
+    setInsertEmployeeValues({ ...insertEmployeeValues, eid: e.target.value })
+  }
+
+  const handleInsertEmployeeFname = (e) => {
+    setInsertEmployeeValues({ ...insertEmployeeValues, fname: e.target.value })
+  }
+
+  const handleInsertEmployeeLname = (e) => {
+    setInsertEmployeeValues({ ...insertEmployeeValues, lname: e.target.value });
+  };
+
+  const handleInsertEmployeeSalary = (e) => {
+    setInsertEmployeeValues({ ...insertEmployeeValues, salary: e.target.value });
+  };
+
+  const handleInsertEmployeeAddress = (e) => {
+    setInsertEmployeeValues({ ...insertEmployeeValues, address: e.target.value });
+  };
+
+  const handleInsertEmployeeEtype = (e) => {
+    setInsertEmployeeValues({ ...insertEmployeeValues, etype: e.target.value });
+  };
+
+  const handleInsertEmployeeSubmit = (e) => {
+    e.preventDefault()
+    setTableState("insert")
+    setActionInput(insertEmployeeValues)
+    setInsertEmployeeValues({
+      eid: "",
+      fname: "",
+      lname: "",
+      salary: "",
+      address: "",
+      etype: "",
+    })
+  }
+
+  // ----- Update -----
+  const [updateEmployeeValues, setUpdateEmployeeValues] = useState({ salary: "", eid: "" })
+
+  const handleUpdateEmployeeSubmit = (e) => {
+    e.preventDefault()
+    setTableState("update")
+    setActionInput(updateEmployeeValues)
+    setUpdateEmployeeValues({ salary: "", eid: "" })
+  }
+
+  const handleUpdateEmployeeEid = (e) => {
+    setUpdateEmployeeValues({ ...updateEmployeeValues, eid: e.target.value });
+  };
+
+  const handleUpdateEmployeeSalary = (e) => {
+    setUpdateEmployeeValues({ ...updateEmployeeValues, salary: e.target.value });
+  };
+
+
+
+  // *************-------------------- Medication Insert and Update --------------------*************
+  const [insertMedicationValues, setInsertMedicationValues] = useState({ mname: '', expiration_date: '', price: '', company: '', amount: '', medtype: '', mid: '', })
+
+  const handleInsertMedicationMname = (e) => {
+    setInsertMedicationValues({ ...insertMedicationValues, mname: e.target.value })
+  }
+
+  const handleInsertMedicationExpirationDate = (e) => {
+    setInsertMedicationValues({ ...insertMedicationValues, expiration_date: e.target.value })
+  }
+
+  const handleInsertMedicationPrice = (e) => {
+    setInsertMedicationValues({ ...insertMedicationValues, price: e.target.value });
+  };
+
+  const handleInsertMedicationCompany = (e) => {
+    setInsertMedicationValues({ ...insertMedicationValues, company: e.target.value });
+  };
+
+  const handleInsertMedicationAmount = (e) => {
+    setInsertMedicationValues({ ...insertMedicationValues, amount: e.target.value });
+  };
+
+  const handleInsertMedicationMedtype = (e) => {
+    setInsertMedicationValues({ ...insertMedicationValues, medtype: e.target.value });
+  };
+
+  const handleInsertMedicationMid = (e) => {
+    setInsertMedicationValues({ ...insertMedicationValues, mid: e.target.value });
+  };
+
+  const handleInsertMedicationSubmit = (e) => {
+    e.preventDefault()
+    setTableState("insert")
+    setActionInput(insertMedicationValues)
+    setInsertMedicationValues({
+      mname: "",
+      expiration_date: "",
+      price: "",
+      company: "",
+      amount: "",
+      medtype: "",
+      mid: "",
+    })
+  }
+
+  // *************-------------------- Technology Insert and Update --------------------*************
+  const [insertTechnologyValues, setInsertTechnologyValues] = useState({ tname: '', datelastused: '', serial_number: '', usagedescription: '', manufacturer: '', })
+
+  const handleInsertTechnologyTname = (e) => {
+    setInsertTechnologyValues({ ...insertTechnologyValues, tname: e.target.value })
+  }
+
+  const handleInsertTechnologyDatelastused = (e) => {
+    setInsertTechnologyValues({ ...insertTechnologyValues, datelastused: e.target.value })
+  }
+
+  const handleInsertTechnologySerialNumber = (e) => {
+    setInsertTechnologyValues({ ...insertTechnologyValues, serial_number: e.target.value });
+  };
+
+  const handleInsertTechnologyUsageDescription = (e) => {
+    setInsertTechnologyValues({ ...insertTechnologyValues, usagedescription: e.target.value });
+  };
+
+  const handleInsertTechnologyManufacturer = (e) => {
+    setInsertTechnologyValues({ ...insertTechnologyValues, manufacturer: e.target.value });
+  };
+
+  const handleInsertTechnologySubmit = (e) => {
+    e.preventDefault()
+    setTableState("insert")
+    setActionInput(insertTechnologyValues)
+    setInsertTechnologyValues({
+      tname: "",
+      datelastused: "",
+      serial_number: "",
+      usagedescription: "",
+      manufacturer: "",
+    })
+  }
+
+  // *************-------------------- Room Insert and Update --------------------*************
+  const [insertRoomValues, setInsertRoomValues] = useState({ roomid: '', roomnumber: '', roomtypeid: '', capacity: '', availability: '', })
+
+  const handleInsertRoomRoomid = (e) => {
+    setInsertRoomValues({ ...insertRoomValues, roomid: e.target.value })
+  }
+
+  const handleInsertRoomRoomnumber = (e) => {
+    setInsertRoomValues({ ...insertRoomValues, roomnumber: e.target.value })
+  }
+
+  const handleInsertRoomRoomtypeid = (e) => {
+    setInsertRoomValues({ ...insertRoomValues, roomtypeid: e.target.value });
+  };
+
+  const handleInsertRoomCapacity = (e) => {
+    setInsertRoomValues({ ...insertRoomValues, capacity: e.target.value });
+  };
+
+  const handleInsertRoomAvailability = (e) => {
+    setInsertRoomValues({ ...insertRoomValues, availability: e.target.value });
+  };
+
+  const handleInsertRoomSubmit = (e) => {
+    e.preventDefault()
+    setTableState("insert")
+    setActionInput(insertRoomValues)
+    setInsertRoomValues({
+      roomid: "",
+      roomnumber: "",
+      roomtypeid: "",
+      capacity: "",
+      availability: "",
+    })
+  }
+
+  // *************-------------------- Functions --------------------*************
 
   const handleTableSwitch = (tableName: string) => {
     setCurrentTable(tableName);
@@ -284,121 +461,223 @@ export default function Home() {
 
       </div>
 
+      {/* ----- Start Patient Table Insert Form -----*/}
       {currentTable === "PatientTable" ? (
-      <div className="flex mt-0 items-center">
-        {/* ----- Insert -----*/}
-        <form onSubmit={handleInsertSubmit}>
-          <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-green-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
-            <div>
-              <input
-                type="text"
-                placeholder="pid"
-                value={insertValues.pid}
-                onChange={handlePID} 
-                className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
-              />
-              <input
-                type="text"
-                placeholder="fname"
-                value={insertValues.fname}
-                onChange={handleFname} 
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-              <input
-                type="text"
-                placeholder="lname"
-                value={insertValues.lname}
-                onChange={handleLname} 
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-              <input
-                type="text"
-                placeholder="dob"
-                value={insertValues.dob}
-                onChange={handleDOB}
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-              <input
-                type="text"
-                placeholder="reason for checking in"
-                value={insertValues.reasonforcheckingin}
-                onChange={handleReasonForCheckingIn}
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-            </div>
-            <div className="">
-              <input
-                type="text"
-                placeholder="insurance number"
-                value={insertValues.insurance_no}
-                onChange={handleInsuranceNo}
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-              <input
-                type="text"
-                placeholder="address"
-                value={insertValues.address}
-                onChange={handleAddress}
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-              <input
-                type="text"
-                placeholder="sex"
-                value={insertValues.sexual_orientation}
-                onChange={handleSexualOrientation}
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-              <input
-                type="text"
-                placeholder="doctor ID"
-                value={insertValues.doctorid}
-                onChange={handleDoctorID} 
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-              <button
-                type="submit"
-                className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
-              >
-                Add to Table
-              </button>
-            </div>
-          </div>
-        </form>
-
         <div className="flex mt-0 items-center">
-        {/* ----- Update -----*/}
-        <form onSubmit={handleUpdateSubmit}>
-          <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-orange-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
-            <div>
-              <input
-                type="text"
-                placeholder="PID"
-                value={updateValues.pid}
-                onChange={handleUpdatePID} 
-                className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
-              />
-              <input
-                type="text"
-                placeholder="Insurance No."
-                value={updateValues.insurance_no}
-                onChange={handleUpdateInsuranceNo} 
-                className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
-              />
-            </div>              
+          {/* ----- Insert -----*/}
+          <form onSubmit={handleInsertPatientSubmit}>
+            <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-green-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
+              <div>
+                <input
+                  type="text"
+                  placeholder="pid"
+                  value={insertPatientValues.pid}
+                  onChange={handleInsertPatientPid}
+                  className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="fname"
+                  value={insertPatientValues.fname}
+                  onChange={handleInsertPatientFname}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="lname"
+                  value={insertPatientValues.lname}
+                  onChange={handleInsertPatientLname}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="dob"
+                  value={insertPatientValues.dob}
+                  onChange={handleInsertPatientDob}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="reason for checking in"
+                  value={insertPatientValues.reasonforcheckingin}
+                  onChange={handleInsertPatientReasonForCheckingIn}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+              </div>
+              <div className="">
+                <input
+                  type="text"
+                  placeholder="insurance number"
+                  value={insertPatientValues.insurance_no}
+                  onChange={handleInsertPatientInsuranceNo}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="address"
+                  value={insertPatientValues.address}
+                  onChange={handleInsertPatientAddress}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="sex"
+                  value={insertPatientValues.sexual_orientation}
+                  onChange={handleInsertPatientSexualOrientation}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="doctor ID"
+                  value={insertPatientValues.doctorid}
+                  onChange={handleInsertPatientDoctorID}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
+                >
+                  Add to Table
+                </button>
+              </div>
+            </div>
+          </form>
+          {/*-----  End Patient Table Insert Form -----*/}
+
+
+          {/*-----  Start Patient Update Form -----*/}
+          <div className="flex mt-0 items-center">
+            {/* ----- Update -----*/}
+            <form onSubmit={handleUpdatePatientSubmit}>
+              <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-orange-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="PID"
+                    value={updatePatientValues.pid}
+                    onChange={handleUpdatePatientPID}
+                    className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Insurance No."
+                    value={updatePatientValues.insurance_no}
+                    onChange={handleUpdatePatientInsuranceNo}
+                    className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
+                >
+                  Update Patient"s Insurance No. by PID
+                </button>
+              </div>
+            </form>
+          </div>
+          {/*-----  End Patient Update Form -----*/}
+        </div>
+
+
+
+      ) : null}
+
+      {/*-----  Start Employee Insert and Update Form -----*/}
+      {currentTable === "EmployeeTable" ? (
+        <div className="flex mt-0 items-center">
+          {/* ----- Insert -----*/}
+          <form onSubmit={handleInsertEmployeeSubmit}>
+            <div
+              className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-green-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col"
+            >
+              <div>
+                <input
+                  type="text"
+                  placeholder="eid"
+                  value={insertEmployeeValues.eid}
+                  onChange={handleInsertEmployeeEid}
+                  className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="fname"
+                  value={insertEmployeeValues.fname}
+                  onChange={handleInsertEmployeeFname}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="lname"
+                  value={insertEmployeeValues.lname}
+                  onChange={handleInsertEmployeeLname}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="salary"
+                  value={insertEmployeeValues.salary}
+                  onChange={handleInsertEmployeeSalary}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <input
+                  type="text"
+                  placeholder="address"
+                  value={insertEmployeeValues.address}
+                  onChange={handleInsertEmployeeAddress}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+              </div>
+              <div className="">
+                <input
+                  type="text"
+                  placeholder="etype"
+                  value={insertEmployeeValues.etype}
+                  onChange={handleInsertEmployeeEtype}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
+                >
+                  Add to Table
+                </button>
+              </div>
+            </div>
+          </form>
+
+          {/* ----- Update -----*/}
+          <form onSubmit={handleUpdateEmployeeSubmit}>
+            <div className="group mx-4 mb-6 mt-0 rounded-full flex space-x-4 bg-orange-500 shadow-sm ring-1 ring-gray-900/5 text-gray-600 px-10 py-4 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 duration-40 max-w-7xl text-sm flex-col">
+              <div>
+                <input
+                  type="text"
+                  placeholder="EID"
+                  value={updateEmployeeValues.eid}
+                  onChange={handleUpdateEmployeeEid}
+                  className="border border-gray-300 rounded-md text-sm px-3 py-1 m-0 focus:outline-none focus:ring focus:border-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Salary"
+                  value={updateEmployeeValues.salary}
+                  onChange={handleUpdateEmployeeSalary}
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:border-blue-500 m-0"
+                />
+              </div>
               <button
                 type="submit"
                 className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
               >
-                Update Patient"s Insurance No. by PID
+                Update Employee"s Salary by EID
               </button>
-          </div>
-        </form>
-      </div>
-      </div>
-      
-      
-      
+            </div>
+          </form>
+        </div>
       ) : null}
+
+      {/*-----  End Employee Insert Form -----*/}
+
+      {/* ----- Update -----*/}
 
       {/* ----- End Table Action Buttons -----*/}
 
@@ -452,6 +731,6 @@ export default function Home() {
       </div>
       {/* ----- End Footer -----*/}
 
-    </main>
+    </main >
   )
 }
