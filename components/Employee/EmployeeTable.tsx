@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 import Employee from '@/lib/employee'
 import Delete from '@/components/Employee/EmployeeDelete'
 import Search from '@/components/Employee/EmployeeSearch'
+import Insert from '@/components/Employee/Insert'
+import Update from '@/components/Employee/EmployeeUpdate'
 
 interface EmployeeTableProps {
   tableState: string;
@@ -26,6 +28,12 @@ export default function EmployeeTable({ tableState, setTableState, actionInput }
       }
       else if (tableState === 'search' && actionInput) {
         result = await Search(actionInput);
+      }
+      else if (tableState === 'insert' && actionInput) {
+        result = await Insert(actionInput);
+      }
+      else if (tableState === 'update' && actionInput) {
+        result = await Update(actionInput);
       }
       
       setData(result);
