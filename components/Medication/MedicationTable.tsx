@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 
-import RefreshButton from '../refresh-button'
+import RefreshButton from "../refresh-button"
 
-import Medication from '@/lib/medication'
-import Fetch from '@/components/Medication/MedicationFetch'
-import Delete from '@/components/Medication/MedicationDelete';
-import Search from '@/components/Medication/MedicationSearch'
+import Medication from "@/lib/medication"
+import Fetch from "@/components/Medication/MedicationFetch"
+import Delete from "@/components/Medication/MedicationDelete";
+import Search from "@/components/Medication/MedicationSearch"
 
 interface MedicationTableProps {
   tableState: string;
@@ -20,12 +20,12 @@ export default function MedicationTable({ tableState, setTableState, actionInput
     async function fetchData() {
       let result;
 
-      if (tableState === 'all' || actionInput === '') {
+      if (tableState === "all" || actionInput === "") {
         result = await Fetch();
-      } else if (tableState === 'delete' && actionInput) { // Check if actionInput is not empty
+      } else if (tableState === "delete" && actionInput) { // Check if actionInput is not empty
         result = await Delete(actionInput); // Pass the id to the Delete function
       }
-      else if (tableState === 'search' && actionInput) {
+      else if (tableState === "search" && actionInput) {
         result = await Search(actionInput);
       }
 
