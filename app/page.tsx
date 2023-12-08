@@ -1,49 +1,49 @@
 "use client";
-import Image from 'next/image'
-import Link from 'next/link'
-import { Suspense, useState, useEffect } from 'react'
-import ExpandingArrow from '@/components/expanding-arrow'
+import Image from "next/image"
+import Link from "next/link"
+import { Suspense, useState, useEffect } from "react"
+import ExpandingArrow from "@/components/expanding-arrow"
 
 // Components
-import PatientTable from '@/components/Patient/PatientTable'
-import EmployeeTable from '@/components/Employee/EmployeeTable'
-import MedicationTable from '@/components/Medication/MedicationTable'
-import RoomTable from '@/components/Room/RoomTable'
-import EmployeeTasksTable from '@/components/EmployeeTask/EmployeeTaskTable'
-import TechnologyTable from '@/components/Technology/TechnologyTable'
-import TablePlaceholder from '@/components/TablePlaceholder'
-import Patient from '@/lib/patient'
+import PatientTable from "@/components/Patient/PatientTable"
+import EmployeeTable from "@/components/Employee/EmployeeTable"
+import MedicationTable from "@/components/Medication/MedicationTable"
+import RoomTable from "@/components/Room/RoomTable"
+import EmployeeTasksTable from "@/components/EmployeeTask/EmployeeTaskTable"
+import TechnologyTable from "@/components/Technology/TechnologyTable"
+import TablePlaceholder from "@/components/TablePlaceholder"
+import Patient from "@/lib/patient"
 
-export const runtime = 'edge'
-export const preferredRegion = 'home'
-export const dynamic = 'force-dynamic'
+export const runtime = "edge"
+export const preferredRegion = "home"
+export const dynamic = "force-dynamic"
 
 export default function Home() {
   // Store current table being shown in currentTable
-  const [currentTable, setCurrentTable] = useState('PatientTable'); // Default to PatientTable
+  const [currentTable, setCurrentTable] = useState("PatientTable"); // Default to PatientTable
   const [actionInput, setActionInput] = useState<any>(); // ID passed into correct table component to be deleted
-  const [tableState, setTableState] = useState('all') // all, delete, fnameSearch
-  const [inputValue, setInputValue] = useState('') // Input value from the delete and search input fields
+  const [tableState, setTableState] = useState("all") // all, delete, fnameSearch
+  const [inputValue, setInputValue] = useState("") // Input value from the delete and search input fields
   const [insertValues, setInsertValues] = useState({
-    pid: '',
-    fname: '',
-    lname: '',
-    dob: '',
-    reasonforcheckingin: '',
-    insurance_no: '',
-    address: '',
-    sexual_orientation: '',
-    doctorid: ''
+    pid: "",
+    fname: "",
+    lname: "",
+    dob: "",
+    reasonforcheckingin: "",
+    insurance_no: "",
+    address: "",
+    sexual_orientation: "",
+    doctorid: ""
   })
-  const [deletePlaceholder, setDeletePlaceholder] = useState('Input')
-  const [searchPlaceholder, setSearchPlaceholder] = useState('Input')
-  const [updateValues, setUpdateValues] = useState({insurance_no: '', pid: ''})
+  const [deletePlaceholder, setDeletePlaceholder] = useState("Input")
+  const [searchPlaceholder, setSearchPlaceholder] = useState("Input")
+  const [updateValues, setUpdateValues] = useState({insurance_no: "", pid: ""})
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault()
-    setTableState('update')
+    setTableState("update")
     setActionInput(updateValues)
-    setUpdateValues({insurance_no: '', pid: ''})
+    setUpdateValues({insurance_no: "", pid: ""})
   }
 
   const handleUpdatePID = (e) => {
@@ -92,38 +92,38 @@ export default function Home() {
 
   const handleInsertSubmit = (e) => {
     e.preventDefault()
-    setTableState('insert')
+    setTableState("insert")
     setActionInput(insertValues)
     setInsertValues({
-      pid: '',
-      fname: '',
-      lname: '',
-      dob: '',
-      reasonforcheckingin: '',
-      insurance_no: '',
-      address: '',
-      sexual_orientation: '',
-      doctorid: ''
+      pid: "",
+      fname: "",
+      lname: "",
+      dob: "",
+      reasonforcheckingin: "",
+      insurance_no: "",
+      address: "",
+      sexual_orientation: "",
+      doctorid: ""
     })
   }
 
   const handleTableSwitch = (tableName: string) => {
     setCurrentTable(tableName);
-    setTableState('all');
+    setTableState("all");
   };
 
   const handleDeleteSubmit = (e) => {
     e.preventDefault();
-    setTableState('delete');
+    setTableState("delete");
     setActionInput(inputValue); // Pass input value to state or directly to the table component as needed
-    setInputValue(''); // Clear the input field after submission
+    setInputValue(""); // Clear the input field after submission
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setTableState('search');
+    setTableState("search");
     setActionInput(inputValue); // Pass input value to state or directly to the table component as needed
-    setInputValue(''); // Clear the input field after submission
+    setInputValue(""); // Clear the input field after submission
   };
 
   const handleInputChange = (e) => {
@@ -133,29 +133,29 @@ export default function Home() {
   // Change the placeholder text for the delete and search input fields based on the current table
   useEffect(() => {
     function setPlaceholders() {
-      if (currentTable === 'PatientTable') {
-        setDeletePlaceholder('Enter PID');
-        setSearchPlaceholder('Enter First Name');
+      if (currentTable === "PatientTable") {
+        setDeletePlaceholder("Enter PID");
+        setSearchPlaceholder("Enter First Name");
       }
-      else if (currentTable === 'EmployeeTable') {
-        setDeletePlaceholder('Enter EID');
-        setSearchPlaceholder('Enter First Name');
+      else if (currentTable === "EmployeeTable") {
+        setDeletePlaceholder("Enter EID");
+        setSearchPlaceholder("Enter First Name");
       }
-      else if (currentTable === 'MedicationTable') {
-        setDeletePlaceholder('Enter MID');
-        setSearchPlaceholder('Enter Medication Name');
+      else if (currentTable === "MedicationTable") {
+        setDeletePlaceholder("Enter MID");
+        setSearchPlaceholder("Enter Medication Name");
       }
-      else if (currentTable === 'RoomTable') {
-        setDeletePlaceholder('Enter Room ID');
-        setSearchPlaceholder('Enter Room Number');
+      else if (currentTable === "RoomTable") {
+        setDeletePlaceholder("Enter Room ID");
+        setSearchPlaceholder("Enter Room Number");
       }
-      else if (currentTable === 'EmployeeTaskTable') {
-        setDeletePlaceholder('Enter Task ID');
-        setSearchPlaceholder('Enter Task Description');
+      else if (currentTable === "EmployeeTaskTable") {
+        setDeletePlaceholder("Enter Task ID");
+        setSearchPlaceholder("Enter Task Description");
       }
-      else if (currentTable === 'TechnologyTable') {
-        setDeletePlaceholder('Enter Serial Number');
-        setSearchPlaceholder('Enter Tname');
+      else if (currentTable === "TechnologyTable") {
+        setDeletePlaceholder("Enter Serial Number");
+        setSearchPlaceholder("Enter Tname");
       }
     }
 
@@ -178,12 +178,12 @@ export default function Home() {
 
       {/* ----- Start Table View Buttons-----*/}
       <div className="flex mt-2 items-center">
-        <h4 className="text-gray-600 text-md font-semibold mr-4 mb-6">Tables</h4> {/* Changed: Added 'mr-4' for margin */}
+        <h4 className="text-gray-600 text-md font-semibold mr-4 mb-6">Tables</h4> {/* Changed: Added "mr-4" for margin */}
 
         {/* View Patients Button */}
         <div
-          onClick={() => handleTableSwitch('PatientTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'PatientTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          onClick={() => handleTableSwitch("PatientTable")}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === "PatientTable" ? "bg-blue-400 font-extrabold text-white/100" : "bg-white/30"} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === "PatientTable" ? "bg-blue-400" : "bg-white"} duration-40`}
         >
           <p>Patients</p>
           <ExpandingArrow />
@@ -191,8 +191,8 @@ export default function Home() {
 
         {/* View Employees Button */}
         <div
-          onClick={() => handleTableSwitch('EmployeeTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'EmployeeTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          onClick={() => handleTableSwitch("EmployeeTable")}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === "EmployeeTable" ? "bg-blue-400 font-extrabold text-white/100" : "bg-white/30"} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === "PatientTable" ? "bg-blue-400" : "bg-white"} duration-40`}
         >
           <p>Employees</p>
           <ExpandingArrow />
@@ -200,8 +200,8 @@ export default function Home() {
 
         {/* View Medications Button */}
         <div
-          onClick={() => handleTableSwitch('MedicationTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'MedicationTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          onClick={() => handleTableSwitch("MedicationTable")}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === "MedicationTable" ? "bg-blue-400 font-extrabold text-white/100" : "bg-white/30"} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === "PatientTable" ? "bg-blue-400" : "bg-white"} duration-40`}
         >
           <p>Medications</p>
           <ExpandingArrow />
@@ -209,8 +209,8 @@ export default function Home() {
 
         {/* View Rooms Button */}
         <div
-          onClick={() => handleTableSwitch('RoomTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'RoomTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          onClick={() => handleTableSwitch("RoomTable")}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === "RoomTable" ? "bg-blue-400 font-extrabold text-white/100" : "bg-white/30"} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === "PatientTable" ? "bg-blue-400" : "bg-white"} duration-40`}
         >
           <p>Rooms</p>
           <ExpandingArrow />
@@ -218,8 +218,8 @@ export default function Home() {
 
         {/* View Technology Button */}
         <div
-          onClick={() => handleTableSwitch('TechnologyTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'TechnologyTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          onClick={() => handleTableSwitch("TechnologyTable")}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === "TechnologyTable" ? "bg-blue-400 font-extrabold text-white/100" : "bg-white/30"} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === "PatientTable" ? "bg-blue-400" : "bg-white"} duration-40`}
         >
           <p>Technology</p>
           <ExpandingArrow />
@@ -227,8 +227,8 @@ export default function Home() {
 
         {/* View EmployeeTasks Button */}
         <div
-          onClick={() => handleTableSwitch('EmployeeTaskTable')}
-          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === 'EmployeeTaskTable' ? 'bg-blue-400 font-extrabold text-white/100' : 'bg-white/30'} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === 'PatientTable' ? 'bg-blue-400' : 'bg-white'} duration-40`}
+          onClick={() => handleTableSwitch("EmployeeTaskTable")}
+          className={`group mx-4 mb-6 sm:mt-0 rounded-full flex space-x-1 ${currentTable === "EmployeeTaskTable" ? "bg-blue-400 font-extrabold text-white/100" : "bg-white/30"} shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-lg font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:${currentTable === "PatientTable" ? "bg-blue-400" : "bg-white"} duration-40`}
         >
           <p>Employee Tasks</p>
           <ExpandingArrow />
@@ -284,7 +284,7 @@ export default function Home() {
 
       </div>
 
-      {currentTable === 'PatientTable' ? (
+      {currentTable === "PatientTable" ? (
       <div className="flex mt-0 items-center">
         {/* ----- Insert -----*/}
         <form onSubmit={handleInsertSubmit}>
@@ -389,7 +389,7 @@ export default function Home() {
                 type="submit"
                 className="bg-blue-400 rounded-md px-4 py-1 text-white font-medium hover:bg-blue-500 transition duration-300 ease-in-out"
               >
-                Update Patient's Insurance No. by PID
+                Update Patient"s Insurance No. by PID
               </button>
           </div>
         </form>
@@ -413,13 +413,13 @@ export default function Home() {
             <p className="justify-center bold text-xl">Loading.....</p>
           </div>}>
           {
-            currentTable === 'TablePlaceHolder' ? <TablePlaceholder /> :
-              currentTable === 'PatientTable' ? <PatientTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
-                currentTable === 'EmployeeTable' ? <EmployeeTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
-                  currentTable === 'MedicationTable' ? <MedicationTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
-                    currentTable === 'RoomTable' ? <RoomTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
-                      currentTable === 'EmployeeTaskTable' ? <EmployeeTasksTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
-                        currentTable === 'TechnologyTable' ? <TechnologyTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
+            currentTable === "TablePlaceHolder" ? <TablePlaceholder /> :
+              currentTable === "PatientTable" ? <PatientTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
+                currentTable === "EmployeeTable" ? <EmployeeTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
+                  currentTable === "MedicationTable" ? <MedicationTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
+                    currentTable === "RoomTable" ? <RoomTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
+                      currentTable === "EmployeeTaskTable" ? <EmployeeTasksTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
+                        currentTable === "TechnologyTable" ? <TechnologyTable tableState={tableState} setTableState={setTableState} actionInput={actionInput} /> :
                           <TablePlaceholder />
           }
         </Suspense>
